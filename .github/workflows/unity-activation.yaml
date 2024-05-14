@@ -1,12 +1,19 @@
 name: Get Unity license activation file 🔐
 
-on: workflow_dispatch
-
+on:
+  push:
+    branches:
+      - main
 jobs:
+  enable:
+    name: test Action
+    runs-on: ubuntu-latest
+    
   requestManualActivationFile:
     name: Request manual activation file 🔑
     runs-on: ubuntu-latest
     steps:
+      - run: action.yml
       - uses: actions/checkout@v2
       - uses: game-ci/unity-request-activation-file@v2
         id: getManualLicenseFile

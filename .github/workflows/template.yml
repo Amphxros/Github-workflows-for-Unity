@@ -1,0 +1,13 @@
+name: Patata
+
+on:
+  push: {branches: [main]}
+  pull_request: {}
+
+jobs:
+   aPotatoForCreatingThePullRequest:
+    name: A potato for your effort!
+    runs-on: ubuntu-latest
+    steps:
+      - name: my-step
+        run: echo "Toma una patata"

@@ -1,6 +1,0 @@
-services:
-  unity-editor:
-    container_name: ci-unity-dotnet-editor
-    image: ppartida-ci-unity-editor:unity-2022
-    tty: true
-    working_dir: /opt/unity/

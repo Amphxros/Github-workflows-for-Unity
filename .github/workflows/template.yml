@@ -1,13 +1,19 @@
-name: Patata
+name: Docker Workflow
 
 on:
-  push: {branches: [main]}
-  pull_request: {}
+  push:
+    branches:
+      - main
 
 jobs:
-   aPotatoForCreatingThePullRequest:
-    name: A potato for your effort!
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: my-step
-        run: echo "Toma una patata"
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Docker container
+        uses: docker://alpine:latest
+        with:
+          args: echo "Hello, Docker!"

@@ -4,17 +4,16 @@ on:
   push:
     branches:
       - main
-env:
-  UNITY_IMAGE: "docker://alpine:latest"
+
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    container: ppartida/unity-ci:v2019.4.28f1 ## Because there are different os, the tag latest is not valid
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Use Docker container
-        uses: UNITY_IMAGE
+        uses: docker://alpine:latest
         with:
           args: echo "Hello, Docker!"

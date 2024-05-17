@@ -26,16 +26,6 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
-            
+
       - name: Build and Run Unity Project
-        run: |
-          docker run --rm \
-            -v ${{ github.workspace }}/project:/project \
-            -v ${{ github.workspace }}/Build:/build \
-            unity-editor:custom \
-            -projectPath /project \
-            -buildTarget StandaloneLinux64 \
-            -quit \
-            -batchmode \
-            -nographics \
-            -logFile /build/build.log
+        run: ./scripts/build.sh

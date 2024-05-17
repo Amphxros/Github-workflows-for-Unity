@@ -26,10 +26,7 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
-
-      - name: Build Docker image
-        run: docker build -t unity-editor:custom .
-
+            
       - name: Build and Run Unity Project
         run: |
           docker run --rm \

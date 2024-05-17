@@ -26,6 +26,7 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
-
+      - name: Make build script executable
+        run: chmod +x ./scripts/build.sh
       - name: Build and Run Unity Project
         run: ./scripts/build.sh

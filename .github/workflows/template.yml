@@ -27,12 +27,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
+      - name: Build Docker image
+        run: docker build -t unity-editor:custom .
+
       - name: Build and Run Unity Project
         run: |
           docker run --rm \
-            -v ${{ github.workspace }}:/project:/project \
+            -v ${{ github.workspace }}/project:/project \
             -v ${{ github.workspace }}/Build:/build \
-            unityci/editor:ubuntu-2022.3.29f1-windows-mono-3.1.0 \
+            unity-editor:custom \
             -projectPath /project \
             -buildTarget StandaloneLinux64 \
             -quit \

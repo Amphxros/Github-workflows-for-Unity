@@ -32,6 +32,7 @@ project/*.apk
 project/*.aab
 project/*.xcodeproj
 project/*.xcworkspace
+project/.vs/
 
 # Crashlytics generated file
 project/crashlytics-build.properties

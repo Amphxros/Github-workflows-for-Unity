@@ -8,18 +8,8 @@ echo "Building for $BUILD_TARGET"
 export BUILD_PATH=./Builds/$BUILD_TARGET/
 mkdir -p $BUILD_PATH
 
-${UNITY_EXECUTABLE:-xvfb-run --auto-servernum --server-args='-screen 0 640x480x24' /opt/Unity/Editor/Unity} \
-  -projectPath . \
-  -quit \
-  -batchmode \
-  -buildTarget $BUILD_TARGET \
-  -customBuildTarget $BUILD_TARGET \
-  -customBuildName $BUILD_NAME \
-  -customBuildPath $BUILD_PATH \
-  -customBuildOptions AcceptExternalModificationsToPlayer \
-  -executeMethod BuildCommand.Build \
-  -logFile
-
+${UNITY_EXECUTABLE} \
+-quit -batchmode -projectPath "." -buildTarget Win64 -executeMethod BuildCommand.PerformBuild -logFile build.log
 UNITY_EXIT_CODE=$?
 
 if [ $UNITY_EXIT_CODE -eq 0 ]; then

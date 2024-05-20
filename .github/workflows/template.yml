@@ -27,8 +27,10 @@ jobs:
         shell: bash
       - name: Build with Docker
         run: |
+          cd ..
+          ls
           docker run --rm \
-          -v $(pwd):/project \
+          -v $(pwd):./project \
           -w /project \
           unityci/editor:ubuntu-2022.3.29f1-windows-mono-3 \
           /bin/bash -c "unity-editor -batchmode -nographics -quit -projectPath /project -buildTarget StandaloneLinux64 -executeMethod BuildCommand.PerformBuild"

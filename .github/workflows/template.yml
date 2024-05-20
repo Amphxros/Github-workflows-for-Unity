@@ -1,32 +1,29 @@
-name: CI
+name: Build - CI
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+ workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
-    steps:
+      runs-on: ubuntu-latest
+      steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Cache Docker layers
-        uses: actions/cache@v2
+  
+      - name: Set up Docker
+        run: |
+          docker pull unityci/editor:ubuntu-2022.3.29f1-windows-mono-3
+  
+      - name: Build with Docker
+        run: |
+          docker run --rm \
+          -v $(pwd):/project \
+          -w /project \
+          unityci/editor:ubuntu-2022.3.29f1-windows-mono-3 \
+          /bin/bash -c "unity-editor -batchmode -nographics -quit -projectPath /project -buildTarget StandaloneLinux64 -executeMethod BuildCommand.PerformBuild"
+  
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v2
         with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-      - name: Make build script executable
-        run: chmod +x ./scripts/build.sh
-      - name: Build and Run Unity Project
-        run: ./scripts/build.sh
+          name: Build
+          path: build

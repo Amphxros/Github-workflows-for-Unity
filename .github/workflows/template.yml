@@ -17,6 +17,12 @@ jobs:
         run: |
             mkdir -p /home/runner/.cache/unity3d
             echo "${{ secrets.UNITY_LICENSE }}" | tr -d '\r' > /home/runner/.cache/unity3d/Unity_lic.ulf
+            if [ -f /home/runner/.cache/unity3d/Unity_lic.ulf ]; then
+              echo "Unity license file created successfully."
+            else
+              echo "Failed to create Unity license file." >&2
+            exit 1
+            fi
         shell: bash
       - name: Build with Docker
         run: |

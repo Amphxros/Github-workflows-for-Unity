@@ -16,6 +16,7 @@ jobs:
       - name: Activate Unity License
         run: |
             mkdir -p /home/runner/.cache/unity3d
+            ls
             echo "${{ secrets.UNITY_LICENSE }}" | tr -d '\r' > /home/runner/.cache/unity3d/Unity_lic.ulf
             if [ -f /home/runner/.cache/unity3d/Unity_lic.ulf ]; then
               echo "Unity license file created successfully."

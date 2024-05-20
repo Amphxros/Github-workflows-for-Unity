@@ -13,15 +13,11 @@ jobs:
       - name: Set up Docker
         run: |
           docker pull unityci/editor:ubuntu-2022.3.29f1-windows-mono-3
-      - name: Unity license thingy
+      - name: Activate Unity License
         run: |
-          set -e
-          set -x
-          mkdir -p /root/.cache/unity3d
-          mkdir -p /root/.local/share/unity3d/Unity/
-          set +x
-          echo 'Writing $UNITY_LICENSE_CONTENT to license file /root/.local/share/unity3d/Unity/Unity_lic.ulf'
-          echo "$UNITY_LICENSE_CONTENT" | base64 --decode | tr -d '\r' > /root/.local/share/unity3d/Unity/Unity_lic.ulf
+            mkdir -p /home/runner/.cache/unity3d
+            echo "${{ secrets.UNITY_LICENSE }}" | tr -d '\r' > /home/runner/.cache/unity3d/Unity_lic.ulf
+          shell: bash
       - name: Build with Docker
         run: |
           docker run --rm \
@@ -29,7 +25,9 @@ jobs:
           -w /project \
           unityci/editor:ubuntu-2022.3.29f1-windows-mono-3 \
           /bin/bash -c "unity-editor -batchmode -nographics -quit -projectPath /project -buildTarget StandaloneLinux64 -executeMethod BuildCommand.PerformBuild"
-  
+      - name: Deactivate Unity License
+        run: rm /home/runner/.cache/unity3d/Unity_lic.ulf
+        shell: bash
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v2
         with:

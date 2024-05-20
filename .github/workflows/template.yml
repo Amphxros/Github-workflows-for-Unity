@@ -24,9 +24,6 @@ jobs:
             exit 1
             fi
         shell: bash
-      - name: List all
-      - run: |
-            ls
       - name: Build with Docker
         run: |
           docker run --rm \
